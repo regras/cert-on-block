@@ -1,5 +1,3 @@
-#!/bin/python
-
 from ethereum.transactions import Transaction
 from ethereum.utils import encode_hex, decode_hex, normalize_address
 import requests

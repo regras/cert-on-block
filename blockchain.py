@@ -1,5 +1,3 @@
-#!/bin/python
-
 import requests
 import logging
 import json

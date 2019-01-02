@@ -1,5 +1,3 @@
-#!/bin/python
-
 import ethereum.utils as eth
 import ethereum.tools.keys as ethkeys
 import os

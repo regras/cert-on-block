@@ -1,5 +1,3 @@
-#!/bin/python
-
 import os
 import logging
 import json

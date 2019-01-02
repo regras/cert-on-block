@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 import tx
 import key
 import blockchain
