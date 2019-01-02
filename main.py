@@ -197,5 +197,9 @@ logging.basicConfig(level=logging.INFO,
                     format=' %(asctime)s - %(levelname)s - %(message)s')
 
 args = parser.parse_args()
+
+if not any(vars(args).values()):
+    parser.error('No sub-command provided.')
+
 config = getConfig(args.config_file)
 args.func(config)
