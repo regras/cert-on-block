@@ -21,7 +21,7 @@ import key
 # @TODO check config/parameters for all subcommands
 
 
-def getConfig(config_file):
+def get_config(config_file):
     if config_file:
         config = configparser.ConfigParser()
         config.read(config_file)
@@ -201,5 +201,5 @@ args = parser.parse_args()
 if not any(vars(args).values()):
     parser.error('No sub-command provided.')
 
-config = getConfig(args.config_file)
+config = get_config(args.config_file)
 args.func(config)
