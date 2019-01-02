@@ -2,6 +2,7 @@
 
 import argparse
 import os
+import sys
 import logging
 import configparser
 
@@ -34,11 +35,12 @@ def get_key_file(config):
     if args.key_file:
         return args.key_file
     else:
-        if config:
-            try:
-                return config['ETC']['KeystoreFile']
-            except Exception:
-                return None
+        try:
+            return config['ETC']['KeystoreFile']
+        except Exception:
+            logging.error('No keystore file provided as parameter or through '
+                          'config file.')
+            sys.exit()
 
 
 def func_issue(config):
