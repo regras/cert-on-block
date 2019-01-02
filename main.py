@@ -26,6 +26,8 @@ def get_config(config_file):
         config = configparser.ConfigParser()
         config.read(config_file)
         return config
+    else:
+        return None
 
 
 def get_key_file(config):
