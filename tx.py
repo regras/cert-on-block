@@ -9,6 +9,7 @@ from datetime import datetime
 import cert
 import blockchain
 
+
 def create_transaction(nonce, gasprice, gaslimit, to, value, data):
     tx = Transaction(nonce, gasprice, gaslimit, to, value, data)
     logging.debug("Created transaction: {0}".format(tx.to_dict()))
@@ -27,7 +28,8 @@ def send_transaction(tx):
 
     response = requests.post(broadcast_url, data={'hex': tx_hex})
     response_json = json.loads(response.text)
-    logging.debug("Got the following response from POST: {0}".format(response.text))
+    logging.debug("Got the following response from POST: {0}".format(
+        response.text))
 
     if response.status_code == requests.codes.ok:
         tx_id = response.json().get('result', None)
@@ -35,7 +37,8 @@ def send_transaction(tx):
             logging.info("Transaction accepted by blockchain with hash: '{0}'".format(tx_id))
         else:
             error_message = response_json['error']['message']
-            logging.error("Transaction rejected. Got the error '{0}'".format(error_message))
+            logging.error("Transaction rejected. Got the error '{0}'".format(
+                error_message))
         return tx_id
     return None
 

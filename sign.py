@@ -79,6 +79,7 @@ def verify_file_sig(file_name, sig_file_name, address):
     with open(sig_file_name) as f:
         sig = json.loads(f.read())
 
-    logging.debug('Read signature as: v:{0}, r:{1}, s:{2}'.format(sig[0], sig[1], sig[2]))
+    logging.debug('Read signature as: v:{0}, r:{1}, s:{2}'.format(sig[0],
+                  sig[1], sig[2]))
 
     return verify_sig(data, sig, address)
