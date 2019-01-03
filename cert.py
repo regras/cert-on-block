@@ -111,18 +111,22 @@ def create_cert_data(config):
     return cert_data
 
 
-def revoke_cert(address, key):
-    ca_addr = b2h(ethereum.utils.privtoaddr(key))  # @TODO -- change to use from
-    # a secret manager
+def revoke_cert(address, key_file):
+    priv_key = key.get_private_key(key_file)
+    ca_addr = b2h(ethereum.utils.privtoaddr(priv_key))
+
     nonce = blockchain.get_address_nonce(ca_addr)
     logging.debug('Nonce is {0}'.format(nonce))
     if not nonce:
         logging.error("Unable to get nonce. Aborting")
-        return None
+        sys.exit(1)
+
     gasprice = blockchain.GASPRICE
     gaslimit = blockchain.GASLIMIT
-    bdata = str.encode('')
     value = OPCODE_REVOKE
+
+    bdata = str.encode('')
+
     t = tx.create_transaction(nonce, gasprice, gaslimit, address, value, bdata)
     signed_tx = tx.sign_transaction(t, key)
     tx_hash = tx.send_transaction(signed_tx)
@@ -130,6 +134,7 @@ def revoke_cert(address, key):
         logging.info("On-block cert succesfully revoked on the transaction "
                      "with hash '{0}'".format(tx_hash))
     else:
-        logging.error('Revocation unsuccesful.')
+        logging.error('Revocation failed.')
+        sys.exit(1)
 
     return tx_hash

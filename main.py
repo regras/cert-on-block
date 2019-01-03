@@ -88,8 +88,7 @@ def func_get_cert(config):
 def func_revoke_cert(config):
     key_file = get_key_file(config)
 
-    priv_key = key.get_private_key(key_file)
-    cert.revoke_cert(args.address, priv_key)
+    cert.revoke_cert(args.address, key_file)
 
 
 def func_gen_keys(config):
