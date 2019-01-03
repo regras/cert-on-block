@@ -2,12 +2,12 @@ import tx
 import key
 import blockchain
 
+import sys
 import ethereum
 import json
+import logging
 from datetime import datetime
 from pycoin.serialize import b2h
-
-import logging
 
 date_format = '%Y-%m-%d %H:%M:%S'
 
@@ -22,33 +22,39 @@ class Cert:
         self.data = data
 
 
-def issue_cert(address, data, key_file, config):  # TODO -- use safer method, dont send key
+def issue_cert(address, data, key_file, config):
     if not data:
         data = create_cert_data(config)
 
-    str_data = json.dumps(data, indent=4)
     priv_key = key.get_private_key(key_file)
-    if priv_key is None:
-        return
-    logging.debug("Priv key: '{}'".format(priv_key))
-    ca_addr = b2h(ethereum.utils.privtoaddr(priv_key))  # TODO -- use from config
+    logging.debug("Private key: '{}'".format(priv_key))
+
+    ca_addr = b2h(ethereum.utils.privtoaddr(priv_key))
     logging.debug("Address: '{}'".format(ca_addr))
+
     nonce = blockchain.get_address_nonce(ca_addr)
     logging.debug("Nonce: '{}'".format(nonce))
     if nonce is None:
         logging.error("Unable to get nonce. Aborting")
         return None
+
     gasprice = blockchain.GASPRICE
     gaslimit = blockchain.GASLIMIT
-    bdata = str.encode(str_data)
     value = OPCODE_ISSUE
+
+    str_data = json.dumps(data, indent=4)
+    bdata = str.encode(str_data)
+
     t = tx.create_transaction(nonce, gasprice, gaslimit, address, value, bdata)
     signed_tx = tx.sign_transaction(t, priv_key)
     tx_hash = tx.send_transaction(signed_tx)
     if tx_hash:
-        logging.info("On-block cert created succesfully on the transaction with hash '{0}' with the following data '{1}'".format(tx_hash, data))
+        logging.info("On-block cert created succesfully on the transaction "
+                     "with hash '{0}' with the following data '{1}'".format(
+                         tx_hash, data))
     else:
         logging.error('On-block cert could not be created.')
+        sys.exit()
 
     return tx_hash
 
