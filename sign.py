@@ -11,7 +11,6 @@ def sign_data(data, key):
     data_hash = eth.sha3(data)
     key_bytes = eth.normalize_key(key)
     sig = eth.ecsign(data_hash, key_bytes)
-    logging.debug("Converted key to bytes: '{0}'".format(key_bytes))
     logging.debug('Signature created: {0}'.format(sig))
 
     return sig
