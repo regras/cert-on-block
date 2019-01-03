@@ -43,6 +43,15 @@ def get_key_file(config):
             sys.exit()
 
 
+def get_ca_addresses(config):
+    try:
+        return config['ETC']['caAddresses'].split(';')
+    except Exception:
+        logging.error('No CA addresses definition found as parameter or on '
+                      'config file!')
+        sys.exit()
+
+
 def func_issue(config):
     if args.key_file:
         key_file = args.key_file
