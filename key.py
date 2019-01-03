@@ -35,7 +35,8 @@ def store_private_key(key, password, output_file):
             logging.info("Private key succesfully stored on file '{}'.".format(
                 output_file))
     else:
-        logging.error('Keystore file already present! Aborting')
+        logging.error('Keystore file already present! Aborting.')
+        sys.exit(1)
 
 
 def retrieve_private_key(password, key_file):
