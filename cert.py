@@ -54,7 +54,7 @@ def issue_cert(address, data, key_file, config):
                          tx_hash, data))
     else:
         logging.error('On-block cert could not be created.')
-        sys.exit()
+        sys.exit(1)
 
     return tx_hash
 
@@ -95,7 +95,7 @@ def create_cert_data(config):
         ca_config = config['CA']
     except Exception:
         logging.error("CA's information not provided on config file.")
-        sys.exit()
+        sys.exit(1)
 
     cert_data = {
             'Issuer':   {'C': ca_config['Country'], 'ST': ca_config['State'],

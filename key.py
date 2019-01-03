@@ -51,10 +51,10 @@ def retrieve_private_key(password, key_file):
                 return key
             except Exception:
                 logging.error('Error retrieving private key.')
-                sys.exit()
+                sys.exit(1)
     else:
         logging.error("Keystore file '{}' inexistent.".format(key_file))
-        sys.exit()
+        sys.exit(1)
 
 
 def get_private_key(key_file):

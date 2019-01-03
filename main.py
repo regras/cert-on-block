@@ -39,7 +39,7 @@ def get_key_file(config):
         except Exception:
             logging.error('No keystore file provided as parameter or through '
                           'config file.')
-            sys.exit()
+            sys.exit(1)
 
 
 def get_ca_addresses(config):
@@ -48,7 +48,7 @@ def get_ca_addresses(config):
     except Exception:
         logging.error('No CA addresses definition found as parameter or on '
                       'config file!')
-        sys.exit()
+        sys.exit(1)
 
 
 def func_issue(config):
