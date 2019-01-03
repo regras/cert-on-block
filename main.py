@@ -53,14 +53,7 @@ def get_ca_addresses(config):
 
 
 def func_issue(config):
-    if args.key_file:
-        key_file = args.key_file
-    elif config and config['ETC'] and config['ETC']['KeystoreFile']:
-        key_file = config['ETC']['KeystoreFile']
-    else:
-        logging.error('No keystore file definition found as parameter or on '
-                      'config file!')
-        return
+    key_file = get_key_file(config)
 
     if args.address:
         #if args.x509_file:  # @TODO really implement x509 import or remove it
@@ -77,12 +70,9 @@ def func_issue(config):
 
 def func_sign(config):
     key_file = get_key_file(config)
-    if key_file is None:
-        logging.error('No keystore file definition found as parameter or on '
-                      'config file!')
-    else:
-        priv_key = key.get_private_key(key_file)
-        sign.sign_file(args.data_file, priv_key)
+
+    priv_key = key.get_private_key(key_file)
+    sign.sign_file(args.data_file, priv_key)
 
 
 def func_check_signature(config):
@@ -114,12 +104,9 @@ def func_get_cert(config):
 
 def func_revoke_cert(config):
     key_file = get_key_file(config)
-    if key_file is None:
-        logging.error('No keystore file definition found as parameter or on '
-                      'config file!')
-    else:
-        priv_key = key.get_private_key(key_file)
-        cert.revoke_cert(args.address, priv_key)
+
+    priv_key = key.get_private_key(key_file)
+    cert.revoke_cert(args.address, priv_key)
 
 
 def func_gen_keys(config):
