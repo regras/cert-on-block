@@ -72,8 +72,8 @@ def verify_file_sig(file_name, sig_file_name, address):
     logging.debug('Read data as: {0}'.format(data))
 
     sig = ''
-    if not os.path.isfile(file_name):
-        logging.error("File {0} does not exist".format(file_name))
+    if not os.path.isfile(sig_file_name):
+        logging.error("File {0} does not exist".format(sig_file_name))
         return False
 
     with open(sig_file_name) as f:
