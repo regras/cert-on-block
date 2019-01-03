@@ -11,6 +11,9 @@ import logging
 
 date_format = '%Y-%m-%d %H:%M:%S'
 
+OPCODE_ISSUE = 0
+OPCODE_REVOKE = 1
+
 
 class Cert:
 
@@ -38,7 +41,7 @@ def issue_cert(address, data, key_file, config):  # TODO -- use safer method, do
     gasprice = blockchain.GASPRICE
     gaslimit = blockchain.GASLIMIT
     bdata = str.encode(str_data)
-    value = 0 # TODO -- use a const
+    value = OPCODE_ISSUE
     t = tx.create_transaction(nonce, gasprice, gaslimit, address, value, bdata)
     signed_tx = tx.sign_transaction(t, priv_key)
     tx_hash = tx.send_transaction(signed_tx)
@@ -100,7 +103,7 @@ def revoke_cert(address, key):
     gasprice = blockchain.GASPRICE
     gaslimit = blockchain.GASLIMIT
     bdata = str.encode('')
-    value = 1
+    value = OPCODE_REVOKE
     t = tx.create_transaction(nonce, gasprice, gaslimit, address, value, bdata)
     signed_tx = tx.sign_transaction(t, key)
     tx_hash = tx.send_transaction(signed_tx)

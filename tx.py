@@ -58,7 +58,7 @@ def get_cert_from_address(addr, trusted_addresses):
     trusted_txs = get_trusted_transactions(addr, trusted_addresses)
     for tx in trusted_txs:
         op_code = int(tx['value'])
-        if op_code == 0:
+        if op_code == cert.OPCODE_ISSUE:
             hex_data = tx['input'][2:]
             bdata = decode_hex(hex_data)
             data = bdata.decode()
@@ -78,6 +78,6 @@ def get_cert_from_address(addr, trusted_addresses):
             now = datetime.now()
             if now < not_before or now > not_after:
                 certificate.status = 'expired'
-        elif op_code == 1:
+        elif op_code == cert.OPCODE_REVOKE:
             certificate.status = 'revoken'
     return certificate
