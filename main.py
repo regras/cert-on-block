@@ -108,7 +108,6 @@ parser_issue.add_argument('--address', dest='address', action='store',
                           help='the address on the blockchain that is used as '
                                'the target for the commands')
 parser_issue.add_argument('--key-file', dest='key_file', action='store')
-#parser_issue.add_argument('--import-x509', dest='x509_file', action='store')
 parser_issue.add_argument('--config', dest='config_file', action='store',
                           help='')
 parser_issue.set_defaults(func=func_issue)
@@ -121,7 +120,7 @@ parser_sign.add_argument('--file', dest='data_file', action='store',
                          required=True)
 parser_sign.add_argument('--key-file', dest='key_file', action='store')
 parser_sign.add_argument('--config', dest='config_file', action='store',
-                          help='')
+                         help='')
 parser_sign.set_defaults(func=func_sign)
 
 # check-sig subcommand
@@ -133,7 +132,7 @@ parser_checksig.add_argument('--file', dest='data_file', action='store',
 parser_checksig.add_argument('--sig-file', dest='sig_file', action='store',
                              required=True)
 parser_checksig.add_argument('--config', dest='config_file', action='store',
-                          help='')
+                             help='')
 parser_checksig.set_defaults(func=func_check_signature)
 
 # get-cert subcommand
@@ -147,7 +146,7 @@ parser_getcert.add_argument('--address', dest='address', action='store',
                             help='the address on the blockchain that is used '
                                  'as the target for the commands')
 parser_getcert.add_argument('--config', dest='config_file', action='store',
-                          help='')
+                            help='')
 parser_getcert.set_defaults(func=func_get_cert)
 
 # revoke-cert subcommand
@@ -161,7 +160,7 @@ parser_revokecert.add_argument('--address', dest='address', action='store',
                                     'used as the target for the commands')
 parser_revokecert.add_argument('--key-file', dest='key_file', action='store')
 parser_revokecert.add_argument('--config', dest='config_file', action='store',
-                          help='')
+                               help='')
 parser_revokecert.set_defaults(func=func_revoke_cert)
 
 # gen-keys subcommand
