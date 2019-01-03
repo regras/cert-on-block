@@ -21,11 +21,15 @@ def get_address_nonce(address):
 
 def get_transactions_on_address(address):
     query_url = 'http://rinkeby.etherscan.io/api?module=account&action=txlist'
-    query_url += '&address={0}&startblock=0&endblock=99999999&sort=asc'.format(address)
+    query_url += '&address={0}&startblock=0&endblock=99999999&sort=asc'.format(
+            address)
 
     response = requests.post(query_url)
-    logging.debug('Got response from address nonce query: {0}'.format(response.text))
+    logging.debug('Got response from address nonce query: {0}'.format(
+        response.text))
 
     if response.status_code == requests.codes.ok:
         txs = response.json().get('result', None)
         return txs
+    else:
+        return None
