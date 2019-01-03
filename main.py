@@ -56,16 +56,9 @@ def func_issue(config):
     key_file = get_key_file(config)
 
     if args.address:
-        #if args.x509_file:  # @TODO really implement x509 import or remove it
-            #if os.path.isfile(args.x509_file):
-                #with open(args.x509_file) as f:
-                    #cert.issue_cert(args.address, f.read(), key_file, config)
-            #else:
-                #logging.error("File '{0}' not found")
-        #else:
-            cert.issue_cert(args.address, None, key_file, config)
+        cert.issue_cert(args.address, None, key_file, config)
     else:
-        logging.error('Address is missing')
+        logging.error('No address provided')
 
 
 def func_sign(config):
