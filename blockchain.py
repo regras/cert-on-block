@@ -2,6 +2,8 @@ import requests
 import logging
 import json
 
+GASPRICE = 32000000000
+GASLIMIT = 500000
 
 def get_address_nonce(address):
     query_url = 'https://rinkeby.etherscan.io/api?module=proxy&action=eth_getTransactionCount'

@@ -35,8 +35,8 @@ def issue_cert(address, data, key_file, config):  # TODO -- use safer method, do
     if nonce is None:
         logging.error("Unable to get nonce. Aborting")
         return None
-    gasprice = 32000000000  # TODO
-    gaslimit = 500000  # TODO
+    gasprice = blockchain.GASPRICE
+    gaslimit = blockchain.GASLIMIT
     bdata = str.encode(str_data)
     value = 0 # TODO -- use a const
     t = tx.create_transaction(nonce, gasprice, gaslimit, address, value, bdata)
@@ -97,8 +97,8 @@ def revoke_cert(address, key):
     if not nonce:
         logging.error("Unable to get nonce. Aborting")
         return None
-    gasprice = 32000000000  # TODO
-    gaslimit = 500000  # TODO
+    gasprice = blockchain.GASPRICE
+    gaslimit = blockchain.GASLIMIT
     bdata = str.encode('')
     value = 1
     t = tx.create_transaction(nonce, gasprice, gaslimit, address, value, bdata)
