@@ -1,6 +1,7 @@
 import ethereum.utils as eth
 import ethereum.tools.keys as ethkeys
 import os
+import sys
 import logging
 import json
 import getpass
@@ -41,12 +42,19 @@ def store_private_key(key, password, output_file):
 def retrieve_private_key(password, key_file):
     if os.path.isfile(key_file):
         with open(key_file) as f:
-            keystore_json = json.load(f)
-            keystore_json['id'] = keystore_json['id']
-            key = ethkeys.decode_keystore_json(keystore_json, password)
-            return key
+            try:
+                keystore_json = json.load(f)
+                keystore_json['id'] = keystore_json['id']
+                key = ethkeys.decode_keystore_json(keystore_json, password)
+                if not key:
+                    raise Exception
+                return key
+            except Exception:
+                logging.error('Error retrieving private key.')
+                sys.exit()
     else:
         logging.error("Keystore file '{}' inexistent.".format(key_file))
+        sys.exit()
 
 
 def get_private_key(key_file):
