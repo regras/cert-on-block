@@ -76,23 +76,15 @@ def func_sign(config):
 
 
 def func_check_signature(config):
-    if config and config['ETC'] and config['ETC']['caAddresses']:
-        ca_addresses = config['ETC']['caAddresses'].split(';')
-    else:
-        logging.error('No CA addresses definition found as parameter or on '
-                      'config file!')
-        return
+    ca_addresses = get_ca_addresses(config)
+
     sign.verify_file_sig(args.data_file, args.sig_file, ca_addresses)
     return None
 
 
 def func_get_cert(config):
-    if config and config['ETC'] and config['ETC']['caAddresses']:
-        ca_addresses = config['ETC']['caAddresses'].split(';')
-    else:
-        logging.error('No CA addresses definition found as parameter or on '
-                      'config file!')
-        return
+    ca_addresses = get_ca_addresses(config)
+
     certificate = tx.get_cert_from_address(args.address, ca_addresses)
     if certificate:
         logging.info('Certificate status: {0}'.format(certificate.status))
