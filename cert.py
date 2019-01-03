@@ -60,18 +60,28 @@ def issue_cert(address, data, key_file, config):
 
 
 def create_cert_data(config):
-    ans = input("Enter the 'Not Before' date in the format 'YYYY-MM-DD hh:mm:ss' (blank for current time): ")
-    if ans:
-        before_date = datetime.strptime(ans, date_format)
-    else:
-        before_date = datetime.now()
-    ans = input("Enter the 'Not After' date in the format 'YYYY-MM-DD hh:mm:ss': ")
-    after_date = datetime.strptime(ans, date_format)
+    not_before_date = None
+    while not not_before_date:
+        ans = input("Enter the 'Not Before' date in the format "
+                    "'YYYY-MM-DD hh:mm:ss' (blank for current time): ")
+        if ans:
+            try:
+                not_before_date = datetime.strptime(ans, date_format)
+            except Exception:
+                logging.error("Date not provided in the required format.")
+        else:
+            not_before_date = datetime.now()
+
+    not_after_date = None
+    while not not_after_date:
+        ans = input("Enter the 'Not After' date in the format "
+                    "'YYYY-MM-DD hh:mm:ss': ")
+        try:
+            not_after_date = datetime.strptime(ans, date_format)
+        except Exception:
+            logging.error("Date not provided in the required format.")
 
     print("Now enter the following info for the user: ")
-    #cert_fields = config['Certificate']['UserInfoFields'].split(';')
-    #fields = []
-    #for field in cert_fields:
 
     country = input("Enter the 'Country' for the user: ")
     state = input("Enter the 'State' for the user: ")
@@ -81,16 +91,19 @@ def create_cert_data(config):
     common_name = input("Enter the 'Common Name' for the user: ")
     email_address = input("Enter the 'Email address' for the user: ")
 
-    if config['CA']:
+    try:
         ca_config = config['CA']
+    except Exception:
+        logging.error("CA's information not provided on config file.")
+        sys.exit()
 
     cert_data = {
             'Issuer':   {'C': ca_config['Country'], 'ST': ca_config['State'],
                          'O': ca_config['Organization'], 'OU':
                          ca_config['OrganizationUnit'], 'CN':
                          ca_config['CommonName']},
-            'Validity': {'Not Before': before_date.strftime(date_format),
-                         'Not After': after_date.strftime(date_format)},
+            'Validity': {'Not Before': not_before_date.strftime(date_format),
+                         'Not After': not_after_date.strftime(date_format)},
             'Subject':  {'C': country, 'ST': state, 'L': location,
                          'O': organization, 'OU': organization_unit,
                          'CN': common_name, 'emailAddress': email_address}
