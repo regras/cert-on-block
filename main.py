@@ -72,7 +72,6 @@ def func_check_signature(config):
     ca_addresses = get_ca_addresses(config)
 
     sign.verify_file_sig(args.data_file, args.sig_file, ca_addresses)
-    return None
 
 
 def func_get_cert(config):
