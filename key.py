@@ -15,7 +15,6 @@ def create_private_key(output_file):
         password = getpass.getpass('Type the password: ')
         password2 = getpass.getpass('Retype the password: ')
     priv = secrets.randbits(256)
-    logging.debug('Private key generated: {}'.format(priv))
     logging.info('Private key succesfully generated.')
     addr = eth.privtoaddr(priv)
     logging.info("The generated address is '{}'".format('0x' + eth.encode_hex(
