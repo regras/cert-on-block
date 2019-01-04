@@ -128,7 +128,7 @@ def revoke_cert(address, key_file):
     bdata = str.encode('')
 
     t = tx.create_transaction(nonce, gasprice, gaslimit, address, value, bdata)
-    signed_tx = tx.sign_transaction(t, key)
+    signed_tx = tx.sign_transaction(t, priv_key)
     tx_hash = tx.send_transaction(signed_tx)
     if tx_hash:
         logging.info("On-block cert succesfully revoked on the transaction "
