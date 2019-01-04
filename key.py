@@ -29,14 +29,19 @@ def store_private_key(key, password, output_file):
                                                cipher='aes-128-ctr')
     keystore_json['id'] = keystore_json['id'].decode('utf8')
     logging.debug(keystore_json)
-    if not os.path.isfile(output_file):
-        with open(output_file, 'w') as f:
-            json.dump(keystore_json, f)
-            logging.info("Private key succesfully stored on file '{}'.".format(
-                output_file))
+    if os.path.isdir(os.path.dirname(output_file)):
+        if not os.path.isfile(output_file):
+            with open(output_file, 'w') as f:
+                json.dump(keystore_json, f)
+                logging.info("Private key succesfully stored on file "
+                             "'{}'.".format(output_file))
+        else:
+            logging.error('Keystore file already present! Aborting.')
+            sys.exit(1)
     else:
-        logging.error('Keystore file already present! Aborting.')
-        sys.exit(1)
+            logging.error("Parent directory of keystore file doesn't exist. "
+                          "Aborting")
+            sys.exit(1)
 
 
 def retrieve_private_key(password, key_file):
