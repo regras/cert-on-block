@@ -167,7 +167,10 @@ parser_revokecert.set_defaults(func=func_revoke_cert)
 
 # gen-keys subcommand
 parser_genkeys = subparsers.add_parser('gen-keys',
-                                       help='')
+                                       help='generates a cryptographic '
+                                       'key-pair (private and public keys) '
+                                       'and saves them in a keystore '
+                                       'protected with a password')
 parser_genkeys.add_argument('--output-file', dest='priv_file', action='store',
                             required=True,
                             help='')
