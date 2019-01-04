@@ -10,15 +10,10 @@ import sign
 import tx
 import key
 
-# @TODO -- have 'parser' module for parsing the args, and that calls
-# 'functions' # module, which executes the possible functions of the program
 # @TODO -- show when cert is included in blockchain
 
 # @TODO -- see about parameter used by on-block cert for tx creation that
 # impedes replay attacks
-
-# @TODO use decent values for gas constants
-# @TODO check config/parameters for all subcommands
 
 
 def get_config():
