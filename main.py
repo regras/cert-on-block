@@ -21,20 +21,21 @@ import key
 # @TODO check config/parameters for all subcommands
 
 
-def get_config(config_file):
-    if config_file:
+def get_config():
+    try:
         config = configparser.ConfigParser()
-        config.read(config_file)
+        config.read(args.config_file)
         return config
-    else:
+    except Exception:
         return None
 
 
-def get_key_file(config):
+def get_key_file():
     if args.key_file:
         return args.key_file
     else:
         try:
+            config = get_config()
             return config['ETC']['KeystoreFile']
         except Exception:
             logging.error('No keystore file provided as parameter or through '
@@ -42,8 +43,9 @@ def get_key_file(config):
             sys.exit(1)
 
 
-def get_ca_addresses(config):
+def get_ca_addresses():
     try:
+        config = get_config()
         return config['ETC']['caAddresses'].split(';')
     except Exception:
         logging.error('No CA addresses definition found as parameter or on '
@@ -51,8 +53,9 @@ def get_ca_addresses(config):
         sys.exit(1)
 
 
-def func_issue(config):
-    key_file = get_key_file(config)
+def func_issue():
+    config = get_config()
+    key_file = get_key_file()
 
     if args.address:
         cert.issue_cert(args.address, None, key_file, config)
@@ -60,21 +63,21 @@ def func_issue(config):
         logging.error('No address provided')
 
 
-def func_sign(config):
-    key_file = get_key_file(config)
+def func_sign():
+    key_file = get_key_file()
 
     priv_key = key.get_private_key(key_file)
     sign.sign_file(args.data_file, priv_key)
 
 
-def func_check_signature(config):
-    ca_addresses = get_ca_addresses(config)
+def func_check_signature():
+    ca_addresses = get_ca_addresses()
 
     sign.verify_file_sig(args.data_file, args.sig_file, ca_addresses)
 
 
-def func_get_cert(config):
-    ca_addresses = get_ca_addresses(config)
+def func_get_cert():
+    ca_addresses = get_ca_addresses()
 
     certificate = tx.get_cert_from_address(args.address, ca_addresses)
     if certificate:
@@ -85,13 +88,13 @@ def func_get_cert(config):
                         "certificate")
 
 
-def func_revoke_cert(config):
-    key_file = get_key_file(config)
+def func_revoke_cert():
+    key_file = get_key_file()
 
     cert.revoke_cert(args.address, key_file)
 
 
-def func_gen_keys(config):
+def func_gen_keys():
     key.create_private_key(args.priv_file)
 
 
@@ -182,5 +185,4 @@ args = parser.parse_args()
 if not any(vars(args).values()):
     parser.error('No sub-command provided.')
 
-config = get_config(args.config_file)
-args.func(config)
+args.func()
