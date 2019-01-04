@@ -131,8 +131,7 @@ parser_checksig = subparsers.add_parser('check-sig',
                                              'valid')
 parser_checksig.add_argument('--file', dest='data_file', action='store',
                              required=True)
-parser_checksig.add_argument('--sig-file', dest='sig_file', action='store',
-                             required=True)
+parser_checksig.add_argument('--sig-file', dest='sig_file', action='store')
 parser_checksig.add_argument('--config', dest='config_file', action='store',
                              required=True, help='')
 parser_checksig.set_defaults(func=func_check_signature)
