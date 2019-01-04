@@ -8,6 +8,10 @@ pairs.
 This program was developed during a scientific research and should not be used
 for real life applications.
 
+## Requirements
+The file `requirements.txt` contains the requirements for this program which
+should be installed for it to work.
+
 ## Usage
 To run the program, simply run the `main.py` with one of the sub-commands.
 Running it with no sub-commands and with the `-h` flag, gives a brief
