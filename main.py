@@ -111,7 +111,7 @@ parser_issue.add_argument('--address', dest='address', action='store',
                                'the target for the commands')
 parser_issue.add_argument('--key-file', dest='key_file', action='store')
 parser_issue.add_argument('--config', dest='config_file', action='store',
-                          help='')
+                          required=True, help='')
 parser_issue.set_defaults(func=func_issue)
 
 # sign subcommand
@@ -134,7 +134,7 @@ parser_checksig.add_argument('--file', dest='data_file', action='store',
 parser_checksig.add_argument('--sig-file', dest='sig_file', action='store',
                              required=True)
 parser_checksig.add_argument('--config', dest='config_file', action='store',
-                             help='')
+                             required=True, help='')
 parser_checksig.set_defaults(func=func_check_signature)
 
 # get-cert subcommand
