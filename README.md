@@ -8,9 +8,10 @@ pairs.
 This program was developed during a scientific research and should not be used
 for real life applications.
 
-## Requirements
-The file `requirements.txt` contains the requirements for this program which
-should be installed for it to work.
+## Installation
+After downloading the project, use
+`pip3 -r requirements.txt`
+to install the required dependencies.
 
 ## Usage
 To run the program, simply run the `main.py` with one of the sub-commands.
