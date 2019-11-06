@@ -24,7 +24,7 @@ def sign_transaction(tx, key):
 
 def send_transaction(tx):
     tx_hex = encode_hex(rlp.encode(tx))
-    broadcast_url = "https://rinkeby.etherscan.io/api?module=proxy&action=eth_sendRawTransaction"
+    broadcast_url = "https://api-rinkeby.etherscan.io/api?module=proxy&action=eth_sendRawTransaction"
 
     response = requests.post(broadcast_url, data={'hex': tx_hex})
     response_json = json.loads(response.text)
