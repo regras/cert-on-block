@@ -8,7 +8,7 @@ GASLIMIT = 500000
 def get_address_nonce(address):
     query_url = 'https://api-rinkeby.etherscan.io/api?module=proxy&action=eth_getTransactionCount'
     query_url += '&address={0}&tag=latest'.format(address)
-    response = requests.post(query_url)
+    response = requests.post(query_url, headers='')
     logging.debug('Got response from address nonce query: {0}'.format(
         response.text))
 
@@ -24,7 +24,7 @@ def get_transactions_on_address(address):
     query_url += '&address={0}&startblock=0&endblock=99999999&sort=asc'.format(
             address)
 
-    response = requests.post(query_url)
+    response = requests.post(query_url, headers='')
     logging.debug('Got response from address nonce query: {0}'.format(
         response.text))
 

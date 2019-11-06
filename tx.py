@@ -26,7 +26,7 @@ def send_transaction(tx):
     tx_hex = encode_hex(rlp.encode(tx))
     broadcast_url = "https://api-rinkeby.etherscan.io/api?module=proxy&action=eth_sendRawTransaction"
 
-    response = requests.post(broadcast_url, data={'hex': tx_hex})
+    response = requests.post(broadcast_url, data={'hex': tx_hex}, headers='')
     response_json = json.loads(response.text)
     logging.debug("Got the following response from POST: {0}".format(
         response.text))
